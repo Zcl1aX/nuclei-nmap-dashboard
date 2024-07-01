@@ -28,11 +28,11 @@ git clone https://github.com/Zcl1aX/nuclei-nmap-dashboard.git
 
 2. **Parse Nmap XML output and Nuclei scan**
 
-Run the `nmap-to-sqlite.py` script to parse your Nmap XML output and store the data in an SQLite database and run `nuclei-to-sqlite.py` to scan and parse nuclei scan data:
+Run the `auto_scan.py` script to scan NMAP and parse your Nmap XML output and store the data in an SQLite database and run `nuclei-to-sqlite.py` to scan and parse nuclei scan data:
 
 ```
 cd nuclei-nmap-dashboard/data/
-python nmap-to-sqlite.py nmap_output.xml
+python auto_scan.py
 python nuclei-to-sqlite.py
 ```
 
