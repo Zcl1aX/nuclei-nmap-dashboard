@@ -1,8 +1,8 @@
-# nmap-did-what
+# nmap-did-what and nuclei dashboard
 
 **nmap-did-what** is a Grafana docker container and a Python script to parse Nmap XML output to an SQLite database. The SQLite database is used as a datasource within Grafana to view the Nmap scan details in a dashboard.
 
-Full Tutorial is available here - [Nmap Dashboard using Grafana](https://hackertarget.com/nmap-dashboard-with-grafana/)
+Full Tutorial for nmap part is available here - [Nmap Dashboard using Grafana](https://hackertarget.com/nmap-dashboard-with-grafana/)
 
 ![Grafana Dashboard](https://hackertarget.com/images/nmap-grafana-dashboard.webp)
 
@@ -10,17 +10,8 @@ Full Tutorial is available here - [Nmap Dashboard using Grafana](https://hackert
 
 The project consists of two main components:
 
-1. A Python script that parses Nmap XML output and stores the data in an SQLite database.
-2. A Grafana Docker container with a pre-configured dashboard for visualizing the Nmap scan data.
-
-### File Structure
-
-- **nmap-to-sqlite.py**: A Python script that parses Nmap XML output and stores the data in an SQLite database.
-- **Dockerfile**: Creates a Docker container based on the official Grafana image, including the necessary configurations for the SQLite data source and dashboard.
-- **docker-compose.yml**: A Docker Compose file that sets up the Grafana container, configuring it to use the SQLite database and including volumes for persistent storage and configuration.
-- **dashboard.yml**: A configuration file that specifies the dashboard provider settings for Grafana.
-- **datasource.yml**: Configures Grafana to use the SQLite database containing the Nmap scan data as the data source.
-- **/data/nmap_results.db**: location in container for the SQLite DB.
+1. A Python script that parses Nmap XML output and Nuclei json output and stores the data in an SQLite database.
+2. A Grafana Docker container with a pre-configured dashboard for visualizing the Nmap scan and Nuclei scan data.
 
 
 ## Usage
@@ -32,16 +23,17 @@ Follow these steps to deploy the environment:
 1. **Clone the repository**
 
 ```
-git clone https://github.com/hackertarget/nmap-did-what.git
+git clone https://github.com/Zcl1aX/nuclei-nmap-dashboard.git
 ```
 
-2. **Parse Nmap XML output**
+2. **Parse Nmap XML output and Nuclei scan**
 
-Run the `nmap-to-sqlite.py` script to parse your Nmap XML output and store the data in an SQLite database:
+Run the `nmap-to-sqlite.py` script to parse your Nmap XML output and store the data in an SQLite database and run `nuclei-to-sqlite.py` to scan and parse nuclei scan data:
 
 ```
-cd nmap-did-what/data/
+cd nuclei-nmap-dashboard/data/
 python nmap-to-sqlite.py nmap_output.xml
+python nuclei-to-sqlite.py
 ```
 
 3. **Start the Grafana Container**
@@ -49,7 +41,7 @@ python nmap-to-sqlite.py nmap_output.xml
 Use Docker Compose to start the Grafana container:
 
 ```
-cd nmap-did-what
+cd nuclei-nmap-dashboard
 docker-compose up -d
 ```
 
@@ -71,6 +63,3 @@ Multiple scans can be reviewed within the DB and the Nmap Dashboard time filters
 - Custom Dashboard are easy to implement, simply adjust the Grafana dashboard to your requirements. Export the JSON of the Dashboard and replace the default Dashboard or create additional dashboard. The ability to spin up a Grafana Docker container with a prebuilt Dashboard is a nice feature.
 - Automation is possible, as you can simply run **nmap** with a cron job, parse the XML with **nmap-to-sqlite.py** and the updated DB will have the newly acquired scan information.
 
-## Credits
-
-Thanks to the Nmap and Grafana projects for providing powerful open-source tools for network scanning and data visualization.
