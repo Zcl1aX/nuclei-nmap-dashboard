@@ -7,4 +7,10 @@ datasources:
     isDefault: true
     jsonData:
       path: /data/nmap_results.db
+  - name: SQLite2
+    type: frser-sqlite-datasource-1
+    access: proxy
+    isDefault: true
+    jsonData:
+      path: /data/nuclei_results.db
 
